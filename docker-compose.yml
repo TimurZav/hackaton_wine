@@ -1,8 +1,8 @@
-version: "3.9"
+version: "3.3"
 services:
   nifi:
     container_name: nifi_container
-    image: apache/nifi:latest
+    image: apache/nifi:1.19.0
     restart: always
     ports:
       - "8081:8081"
