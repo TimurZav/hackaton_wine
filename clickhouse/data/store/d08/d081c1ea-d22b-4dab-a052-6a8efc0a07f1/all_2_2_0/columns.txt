@@ -1,0 +1,5 @@
+columns format version: 1
+3 columns:
+`_airbyte_ab_id` String
+`_airbyte_data` String
+`_airbyte_emitted_at` DateTime64(3, 'GMT')

@@ -1,0 +1,91 @@
+version: "3.9"
+services:
+  nifi:
+    container_name: nifi_container
+    image: apache/nifi:latest
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      NIFI_WEB_HTTP_PORT: "8081"
+      PATH_ROOT: ${PATH_DOCKER}
+    volumes:
+      - ${PATH_ROOT}:${PATH_DOCKER}
+      - ./jdbc:/mnt/jdbc
+      - ./nifi-conf:/opt/nifi/nifi-current/conf
+    networks:
+      - db
+
+  clickhouse:
+    container_name: clickhouse
+    image: bitnami/clickhouse:22.11.2
+    restart: always
+    ports:
+      - ${CLICKHOUSE_PORT}:${CLICKHOUSE_PORT}
+    volumes:
+      - ./clickhouse:/bitnami/clickhouse
+    environment:
+      - CLICKHOUSE_ADMIN_USER=${CLICKHOUSE_USER}
+      - CLICKHOUSE_ADMIN_PASSWORD=${CLICKHOUSE_PASSWORD}
+    networks:
+      - db
+
+  dbeaver:
+    image: dbeaver/cloudbeaver:23.1.0
+    container_name: dbeaver
+    restart: always
+    ports:
+      - "8121:8978"
+    volumes:
+      - ./workspace:/opt/cloudbeaver/workspace
+    networks:
+      - db
+
+  wine:
+    container_name: wine
+    restart: always
+    ports:
+      - "8101:8101"
+    volumes:
+      - ${PATH_ROOT}:${PATH_DOCKER}
+      - ${PATH_SCRIPTS}:${PATH_SCRIPTS_DOCKER}
+    environment:
+      PATH_ROOT: ${PATH_DOCKER}
+      PATH_SCRIPTS_DOCKER: ${PATH_SCRIPTS_DOCKER}
+    build:
+      context: wine
+      dockerfile: ./Dockerfile
+      args:
+        PATH_SCRIPTS_DOCKER: ${PATH_SCRIPTS_DOCKER}
+    command:
+      bash -c "bash ${PATH_SCRIPTS_DOCKER}/infinite_loop.sh"
+    networks:
+      - db
+
+  api_wine:
+    container_name: api_wine
+    restart: always
+    ports:
+      - "8102:8102"
+    volumes:
+      - ${PATH_PREDICTION}:${PATH_PREDICTION_DOCKER}
+    environment:
+      CLICKHOUSE_HOST: ${CLICKHOUSE_HOST}
+      CLICKHOUSE_PORT: ${CLICKHOUSE_PORT}
+      CLICKHOUSE_DB: ${CLICKHOUSE_DB}
+      CLICKHOUSE_USER: ${CLICKHOUSE_USER}
+      CLICKHOUSE_PASSWORD: ${CLICKHOUSE_PASSWORD}
+      PATH_PREDICTION_DOCKER: ${PATH_PREDICTION_DOCKER}
+    build:
+      context: api_wine
+      dockerfile: ./Dockerfile
+      args:
+        PATH_PREDICTION: ${PATH_PREDICTION_DOCKER}
+    command:
+      bash -c "python3 ${PATH_PREDICTION_DOCKER}/main.py"
+    networks:
+      - db
+
+networks:
+  db:
+    driver: bridge

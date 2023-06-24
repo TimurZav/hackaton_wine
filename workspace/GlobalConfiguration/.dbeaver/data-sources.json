@@ -1,0 +1,35 @@
+{
+	"folders": {},
+	"connections": {
+		"com_clickhouse-188e9eca7f0-1e7f040875d4ddc2": {
+			"provider": "clickhouse",
+			"driver": "com_clickhouse",
+			"name": "ClickHouse",
+			"save-password": true,
+			"configuration": {
+				"host": "clickhouse",
+				"port": "8123",
+				"database": "default",
+				"url": "jdbc:clickhouse://clickhouse:8123/default",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"auth-model": "native",
+				"auth-properties": {
+					"userPassword": "admin",
+					"userName": "admin"
+				}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"auto-close-transactions": false
+		}
+	}
+}
