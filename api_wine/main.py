@@ -8,6 +8,7 @@ from clickhouse_connect import get_client
 app: Flask = Flask(__name__)
 CORS(app)
 
+
 def parse_data(query):
     result = {}
     for row in query:
@@ -30,7 +31,7 @@ def parse_data(query):
     return result
 
 
-@app.post("/")
+@app.post("/predict")
 def get_house_prediction_price():
     response = request.json
     dataset = json_normalize(response)
