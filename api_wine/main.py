@@ -12,16 +12,7 @@ CORS(app)
 def parse_data(query):
     result = {}
     for row in query:
-        vineyard_name = row[0]
-        coordinates = [[float(row[1]), float(row[2])], [float(row[3]), float(row[4])]]
-
-        if vineyard_name not in result:
-            result[vineyard_name] = {
-                "coordinates": coordinates,
-                "history": {}
-            }
-
-        result[vineyard_name]["history"][row[5].strftime("%Y-%m-%d")] = {
+        result[row[5].strftime("%Y-%m-%d")] = {
             "temperature": row[6],
             "airHumidity": row[7],
             "windSpeed": row[8],
