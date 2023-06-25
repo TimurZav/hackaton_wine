@@ -31,13 +31,18 @@ def parse_data(query):
     return result
 
 
+def impute_color(x):
+    return 0 if x == 'white' else 1
+
+
 @app.post("/predict")
 def get_house_prediction_price():
     response = request.json
     dataset = json_normalize(response)
+    dataset['winecolor'] = dataset['winecolor'].apply(impute_color)
     model_file = "model_prediction_quality_wine.sav"
     loaded_model = pickle.load(open(model_file, 'rb'))
-    return loaded_model.predict(dataset)[0]
+    return str(loaded_model.predict(dataset)[0])
 
 
 @app.post("/map")

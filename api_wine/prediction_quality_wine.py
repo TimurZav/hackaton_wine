@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor
-from catboost import CatBoostRegressor
+# from catboost import CatBoostRegressor
 from sklearn.model_selection import train_test_split
 
-df = pd.read_csv("/home/timur/Загрузки/wine_quality.csv", sep=',')
+df = pd.read_csv("wine_quality.csv", sep=',')
 
 print(df.shape)
 df.sample(10)
@@ -53,9 +53,9 @@ df.value_counts('winecolor')
 
 X = df.drop('quality',axis=1)
 y = df['quality']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
-# model = LinearRegression()
-model = CatBoostRegressor()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model = LinearRegression()
+# model = CatBoostRegressor()
 model.fit(X_train,y_train)
 y_pred = model.predict(X_test)
 
