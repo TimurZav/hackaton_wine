@@ -4,8 +4,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-# from catboost import CatBoostRegressor
 from sklearn.model_selection import train_test_split
 
 df = pd.read_csv("wine_quality.csv", sep=',')

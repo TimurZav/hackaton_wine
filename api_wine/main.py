@@ -55,5 +55,16 @@ def get_data_map():
     return parse_data(query)
 
 
+@app.post("/last_date")
+def get_last_data_map():
+    response = request.json
+    client = get_client(host=os.getenv('CLICKHOUSE_HOST'), database=os.getenv('CLICKHOUSE_DB'),
+                        username=os.getenv('CLICKHOUSE_USER'), password=os.getenv('CLICKHOUSE_PASSWORD'))
+    query = client.query(
+        f"SELECT * FROM wine_map WHERE id='{response['id']}' and date=(SELECT MAX(date) FROM wine_map "
+        f"WHERE id='{response['id']}')").result_rows
+    return parse_data(query)
+
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
