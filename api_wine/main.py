@@ -16,7 +16,19 @@ def parse_data(query):
             "temperature": row[6],
             "airHumidity": row[7],
             "windSpeed": row[8],
-            "precipitation": row[9]
+            "precipitation": row[9],
+            "fixed_acidity": row[10],
+            "volatile_acidity": row[11],
+            "citric_acid": row[12],
+            "residual_sugar": row[13],
+            "chlorides": row[14],
+            "free_sulfur_dioxide": row[15],
+            "total_sulfur_dioxide": row[16],
+            "density": row[17],
+            "pH": row[18],
+            "sulphates": row[19],
+            "alcohol": row[20],
+            "winecolor": row[21]
         }
 
     return result
