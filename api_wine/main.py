@@ -43,7 +43,7 @@ def get_house_prediction_price():
     response = request.json
     dataset = json_normalize(response)
     dataset['winecolor'] = dataset['winecolor'].apply(impute_color)
-    model_file = "model_prediction_quality_wine.sav"
+    model_file = f"{os.environ['PATH_PREDICTION_DOCKER']}/model_prediction_quality_wine.sav"
     loaded_model = pickle.load(open(model_file, 'rb'))
     return str(loaded_model.predict(dataset)[0])
 

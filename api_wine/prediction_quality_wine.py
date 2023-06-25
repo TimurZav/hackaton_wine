@@ -2,8 +2,8 @@ import pickle
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+from catboost import CatBoostRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
-from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 df = pd.read_csv("wine_quality.csv", sep=',')
@@ -52,8 +52,7 @@ df.value_counts('winecolor')
 X = df.drop('quality',axis=1)
 y = df['quality']
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-model = LinearRegression()
-# model = CatBoostRegressor()
+model = CatBoostRegressor()
 model.fit(X_train,y_train)
 y_pred = model.predict(X_test)
 
