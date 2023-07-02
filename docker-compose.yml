@@ -59,7 +59,7 @@ services:
       args:
         PATH_SCRIPTS_DOCKER: ${PATH_SCRIPTS_DOCKER}
     command:
-      bash -c "bash ${PATH_SCRIPTS_DOCKER}/infinite_loop.sh"
+      bash -c "chmod -R 777 ${PATH_SCRIPTS_DOCKER} && bash ${PATH_SCRIPTS_DOCKER}/infinite_loop.sh"
     networks:
       - db
 
