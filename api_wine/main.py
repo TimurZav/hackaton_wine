@@ -13,22 +13,22 @@ def parse_data(query):
     result = {}
     for row in query:
         result[row[5].strftime("%Y-%m-%d")] = {
-            "temperature": row[6],
-            "airHumidity": row[7],
-            "windSpeed": row[8],
-            "precipitation": row[9],
-            "fixed_acidity": row[10],
-            "volatile_acidity": row[11],
-            "citric_acid": row[12],
-            "residual_sugar": row[13],
-            "chlorides": row[14],
-            "free_sulfur_dioxide": row[15],
-            "total_sulfur_dioxide": row[16],
-            "density": row[17],
-            "pH": row[18],
-            "sulphates": row[19],
-            "alcohol": row[20],
-            "winecolor": row[21]
+            "temperature": row[6] or None,
+            "airHumidity": row[7] or None,
+            "windSpeed": row[8] or None,
+            "precipitation": row[9] or None,
+            "fixed_acidity": row[10] or None,
+            "volatile_acidity": row[11] or None,
+            "citric_acid": row[12] or None,
+            "residual_sugar": row[13] or None,
+            "chlorides": row[14] or None,
+            "free_sulfur_dioxide": row[15] or None,
+            "total_sulfur_dioxide": row[16] or None,
+            "density": row[17] or None,
+            "pH": row[18] or None,
+            "sulphates": row[19] or None,
+            "alcohol": row[20] or None,
+            "winecolor": row[21] or None
         }
 
     return result
